@@ -75,16 +75,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvButtonLabel" />
 
-    <!-- Bottom Footer Tip -->
+    <!-- Bottom Footer Version & Year -->
     <TextView
         android:id="@+id/tvFooterTip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
-        android:text="Fast Reboot • No Root Required"
-        android:textColor="#475569"
-        android:textSize="11sp"
-        android:letterSpacing="0.05"
+        android:text="@string/footer_version"
+        android:textColor="#64748B"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.06"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

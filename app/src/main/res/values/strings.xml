@@ -16,4 +16,5 @@
     <string name="dialog_setup_message">Để RestartNow tự động khởi động lại màn hình mà không cần can thiệp Root máy, bạn chỉ cần gạt BẬT \"RestartNow\" trong mục Hỗ trợ tiếp cận (Chỉ cần làm 1 lần duy nhất, dịch vụ sẽ tự động duy trì vĩnh viễn sau mỗi lần khởi động lại xe).</string>
     <string name="btn_open_settings">Kích Hoạt Ngay</string>
     <string name="btn_cancel">Để sau</string>
+    <string name="footer_version">RestartNow v1.0 • 2026</string>
 </resources>

@@ -42,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         tvButtonLabel = findViewById(R.id.tvButtonLabel);
         tvSubtitle = findViewById(R.id.tvSubtitle);
 
+        TextView tvFooterTip = findViewById(R.id.tvFooterTip);
+        if (tvFooterTip != null) {
+            try {
+                String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                tvFooterTip.setText("RestartNow v" + versionName + " • 2026");
+            } catch (Exception ignored) {
+            }
+        }
+
         btnReboot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
