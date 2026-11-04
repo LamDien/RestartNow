@@ -132,24 +132,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Right Container: AdMob Block -->
+    <!-- Right Container: AdMob Block (Hugs AdMob neatly without oversized border) -->
     <FrameLayout
         android:id="@+id/layoutAdCard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_ad_card"
-        android:padding="8dp"
+        android:padding="12dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineVertical"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Ad Placeholder View -->
+        <!-- Ad Placeholder View (Matches 300x250 Ad size) -->
         <LinearLayout
             android:id="@+id/layoutAdPlaceholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
@@ -186,12 +185,12 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Google AdMob AdView -->
+        <!-- Google AdMob AdView (Standard Full 300x250 Medium Rectangle) -->
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
             ads:adSize="MEDIUM_RECTANGLE"
             ads:adUnitId="@string/admob_ad_unit_test" />
@@ -199,3 +198,4 @@
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
