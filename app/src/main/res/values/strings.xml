@@ -21,7 +21,6 @@
     <string name="dialog_about_title">About RestartNow</string>
     <string name="dialog_about_message">RestartNow v2.0 (2026)\n\nUniversal 1-Touch System Reboot Utility for Android phones, tablets, and Automotive HeadUnits.\n\n• Engine: Dual-Action No-Root Architecture (Automotive Broadcast + Accessibility Gesture)\n• Screen Support: Adaptive Landscape &amp; Portrait\n• Developer: LamDien\n• License: Open Source (MIT License)\n• Privacy: Zero personal data collected.\n\nProject Home:\nhttps://github.com/LamDien/RestartNow</string>
     <string name="dialog_about_close">Close</string>
-    <string name="admob_ad_unit_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_placeholder_title">Sponsored Ad Space</string>
     <string name="ad_placeholder_desc">Google AdMob Test Unit</string>
 </resources>

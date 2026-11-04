@@ -48,11 +48,33 @@ public class RebootManager {
                 Log.i(TAG, "Đang gửi các Broadcast Intents đặc thù xe hơi...");
                 sendAutomotiveRebootBroadcasts(context);
 
+                // Kiểm tra trạng thái Accessibility trong cài đặt hệ thống Android
+                boolean settingsEnabled = isAccessibilitySettingsEnabled(context);
+                boolean running = RebootAccessibilityService.isRunning();
+                Log.i(TAG, "Kiểm tra Accessibility: isRunning=" + running + ", isEnabledInSettings=" + settingsEnabled);
+
+                // Nếu người dùng đã gạt ON trong Settings nhưng Service đang trong quá trình bind (chưa có instance),
+                // chờ tối đa 2 giây (15 x 150ms) để hệ thống Android hoàn tất liên kết Service.
+                if (settingsEnabled && !running) {
+                    Log.i(TAG, "Accessibility đã bật trong Settings, chờ Android hoàn tất kết nối Service...");
+                    for (int i = 0; i < 15; i++) {
+                        try {
+                            Thread.sleep(150);
+                        } catch (InterruptedException ignored) {
+                        }
+                        if (RebootAccessibilityService.isRunning()) {
+                            running = true;
+                            Log.i(TAG, "RebootAccessibilityService đã kết nối thành công sau " + ((i + 1) * 150) + "ms");
+                            break;
+                        }
+                    }
+                }
+
                 // =========================================================================
                 // TẦNG 2: Sử dụng Dịch vụ Hỗ trợ tiếp cận (Accessibility Service)
                 // Tự động mở menu nguồn hệ thống và auto-click "Khởi động lại" (0.2s)
                 // =========================================================================
-                if (RebootAccessibilityService.isRunning()) {
+                if (running) {
                     Log.i(TAG, "Accessibility Service đang chạy. Kích hoạt Power Dialog & Auto-Click...");
                     boolean a11ySuccess = RebootAccessibilityService.triggerPowerDialogAndAutoClick();
                     if (a11ySuccess) {
@@ -84,13 +106,14 @@ public class RebootManager {
 
                 // =========================================================================
                 // TẦNG 5: Hướng dẫn kích hoạt Accessibility 1 lần duy nhất
-                // (Nếu broadcast chưa có hiệu lực và chưa bật Accessibility)
+                // (Nếu người dùng thực sự CHƯA bật Accessibility trong Settings)
                 // =========================================================================
+                final boolean needSetup = !settingsEnabled;
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         if (callback != null) {
-                            if (!RebootAccessibilityService.isRunning()) {
+                            if (needSetup) {
                                 callback.onAccessibilitySetupRequired();
                             } else {
                                 callback.onRebootFailed("Unable to activate automatic system reboot.");
@@ -188,5 +211,32 @@ public class RebootManager {
         }
 
         return false;
+    }
+
+    /**
+     * Kiểm tra trạng thái đã bật dịch vụ Accessibility của ứng dụng trong Android Settings hay chưa.
+     */
+    public static boolean isAccessibilitySettingsEnabled(Context context) {
+        if (context == null) return false;
+        try {
+            int accessibilityEnabled = android.provider.Settings.Secure.getInt(
+                    context.getContentResolver(),
+                    android.provider.Settings.Secure.ACCESSIBILITY_ENABLED, 0);
+            if (accessibilityEnabled != 1) {
+                return false;
+            }
+            String services = android.provider.Settings.Secure.getString(
+                    context.getContentResolver(),
+                    android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (services == null) {
+                return false;
+            }
+            String expectedService = context.getPackageName() + "/" + RebootAccessibilityService.class.getName();
+            String shortExpectedService = context.getPackageName() + "/." + RebootAccessibilityService.class.getSimpleName();
+            return services.contains(expectedService) || services.contains(shortExpectedService);
+        } catch (Throwable t) {
+            Log.w(TAG, "Lỗi kiểm tra Accessibility trong Settings: " + t.getMessage());
+            return false;
+        }
     }
 }

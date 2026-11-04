@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private AdView adView;
     private View layoutAdPlaceholder;
 
+    private AlertDialog setupDialog = null;
+
     private boolean isRebooting = false;
 
     @Override
@@ -140,6 +142,14 @@ public class MainActivity extends AppCompatActivity {
         if (!isRebooting) {
             resetButtonUI();
         }
+
+        // Tự động đóng dialog hướng dẫn nếu người dùng đã bật Accessibility trong Settings
+        if (RebootManager.isAccessibilitySettingsEnabled(this)) {
+            if (setupDialog != null && setupDialog.isShowing()) {
+                setupDialog.dismiss();
+                setupDialog = null;
+            }
+        }
     }
 
     @Override
@@ -152,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        if (setupDialog != null && setupDialog.isShowing()) {
+            setupDialog.dismiss();
+            setupDialog = null;
+        }
         if (adView != null) {
             adView.destroy();
         }
@@ -229,12 +243,19 @@ public class MainActivity extends AppCompatActivity {
      * Guides user to enable Accessibility Service 1 time (No Root required)
      */
     private void showAccessibilitySetupDialog() {
-        new AlertDialog.Builder(this)
+        if (isFinishing() || isDestroyed()) return;
+        if (setupDialog != null && setupDialog.isShowing()) {
+            return;
+        }
+
+        setupDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_setup_title)
                 .setMessage(R.string.dialog_setup_message)
                 .setPositiveButton(R.string.btn_open_settings, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        setupDialog = null;
                         try {
                             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -248,10 +269,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        setupDialog = null;
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_info)
-                .setCancelable(false)
+                .setCancelable(true)
                 .show();
     }
 

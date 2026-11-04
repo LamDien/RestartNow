@@ -40,7 +40,14 @@ public class RebootAccessibilityService extends AccessibilityService {
     @Override
     public boolean onUnbind(android.content.Intent intent) {
         sInstance = null;
-        return super.onUnbind(intent);
+        return true;
+    }
+
+    @Override
+    public void onRebind(android.content.Intent intent) {
+        super.onRebind(intent);
+        sInstance = this;
+        Log.i(TAG, "RebootAccessibilityService đã rebind và sẵn sàng.");
     }
 
     @Override

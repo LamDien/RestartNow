@@ -17,10 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RestartNow">
 
-        <!-- Sample AdMob App ID for testing -->
+        <!-- AdMob App ID injected dynamically from local.properties -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="${admobAppId}"/>
 
         <activity
             android:name=".MainActivity"
