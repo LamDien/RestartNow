@@ -8,7 +8,7 @@
 ---
 
 ## 1. Tổng Quan (Executive Summary)
-RestartNow là ứng dụng tiện ích độc lập dành cho hệ điều hành Android trên ô tô. Ứng dụng chỉ có duy nhất một tác vụ: thực hiện khởi động lại toàn bộ hệ điều hành (Cold Reboot) nhanh nhất có thể thông qua quyền Root (`su`), giải quyết triệt để tình trạng tràn RAM, đơ cảm ứng hoặc mất sóng 4G/GPS khi xe dùng chế độ ngủ sâu liên tục nhiều tuần.
+RestartNow là ứng dụng tiện ích độc lập dành cho hệ điều hành Android trên ô tô. Ứng dụng chỉ có duy nhất một tác vụ: thực hiện khởi động lại toàn bộ hệ điều hành (Cold Reboot) nhanh nhất có thể thông qua lệnh Broadcast phần cứng chip Rockchip PX5 (`com.microntek.hctreboot`) kết hợp dịch vụ trợ năng tự động (Accessibility Service), hoàn toàn KHÔNG CẦN ROOT, giải quyết triệt để tình trạng tràn RAM, đơ cảm ứng hoặc mất sóng 4G/GPS khi xe dùng chế độ ngủ sâu liên tục nhiều tuần.
 
 ---
 
@@ -18,9 +18,12 @@ RestartNow là ứng dụng tiện ích độc lập dành cho hệ điều hàn
 graph TD
     A[User mở app RestartNow] --> B[Giao diện Cockpit hiển thị nút to tròn]
     B --> C[User chạm vào nút 'RestartNow']
-    D --> E[Gọi tiến trình Runtime exec su]
-    E --> F[Gửi lệnh reboot & setprop sys.powerctl reboot]
-    F --> G[Hệ điều hành Android khởi động lại toàn bộ]
+    C --> D[Gửi Broadcast PX5 com.microntek.hctreboot]
+    D --> E{MCU nhận lệnh?}
+    E -- Có --> F[Hệ điều hành khởi động lại toàn bộ]
+    E -- Không --> G[Accessibility Service mở Menu Nguồn]
+    G --> H[Tự động quét & click 'Khởi động lại' trong 0.2s]
+    H --> F
 ```
 
 ---

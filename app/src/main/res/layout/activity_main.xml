@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
-        android:text="Fast Root Reboot • SuperSU Certified"
+        android:text="Fast Reboot • No Root Required"
         android:textColor="#475569"
         android:textSize="11sp"
         android:letterSpacing="0.05"
