@@ -93,7 +93,7 @@ public class RebootManager {
                             if (!RebootAccessibilityService.isRunning()) {
                                 callback.onAccessibilitySetupRequired();
                             } else {
-                                callback.onRebootFailed("Không thể kích hoạt khởi động lại tự động.");
+                                callback.onRebootFailed("Unable to activate automatic system reboot.");
                             }
                         }
                     }

@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RestartNow</string>
-    <string name="title_headunit">OWNICE C800 PRO</string>
+    <string name="title_headunit">ANDROID SYSTEM</string>
     <string name="btn_reboot">RestartNow</string>
-    <string name="btn_rebooting">ĐANG KHỞI ĐỘNG...</string>
-    <string name="subtitle_ready">Chạm để khởi động lại hệ thống ngay lập tức</string>
-    <string name="subtitle_rebooting">Đang gửi tín hiệu khởi động lại đến hệ điều hành...</string>
-    <string name="device_ready">HỆ THỐNG SẴN SÀNG</string>
-    <string name="error_root_title">Thông Báo</string>
-    <string name="error_root_message">Không thể thực thi lệnh khởi động lại. Vui lòng kiểm tra cài đặt của màn hình!</string>
-    <string name="btn_ok">Đã hiểu</string>
-    <string name="accessibility_service_label">Dịch Vụ Khởi Động Lại RestartNow</string>
-    <string name="accessibility_service_desc">Cho phép ứng dụng tự động thực hiện thao tác khởi động lại hệ thống không cần Root.</string>
-    <string name="dialog_setup_title">Kích hoạt Khởi động lại (Không cần Root)</string>
-    <string name="dialog_setup_message">Để RestartNow tự động khởi động lại màn hình mà không cần can thiệp Root máy, bạn chỉ cần gạt BẬT \"RestartNow\" trong mục Hỗ trợ tiếp cận (Chỉ cần làm 1 lần duy nhất, dịch vụ sẽ tự động duy trì vĩnh viễn sau mỗi lần khởi động lại xe).</string>
-    <string name="btn_open_settings">Kích Hoạt Ngay</string>
-    <string name="btn_cancel">Để sau</string>
-    <string name="footer_version">RestartNow v1.0 • 2026</string>
+    <string name="btn_rebooting">REBOOTING...</string>
+    <string name="subtitle_ready">Tap to reboot system immediately</string>
+    <string name="subtitle_rebooting">Sending reboot signal to operating system...</string>
+    <string name="device_ready">SYSTEM READY</string>
+    <string name="error_root_title">Notice</string>
+    <string name="error_root_message">Unable to execute reboot command. Please check device settings!</string>
+    <string name="btn_ok">Got it</string>
+    <string name="accessibility_service_label">RestartNow Reboot Service</string>
+    <string name="accessibility_service_desc">Allows RestartNow to automatically perform system reboot without Root access.</string>
+    <string name="dialog_setup_title">Enable Reboot (No Root Required)</string>
+    <string name="dialog_setup_message">To allow RestartNow to reboot your device automatically without Root access, please turn ON \"RestartNow\" in Accessibility settings.\n\n(This 1-time setup remains permanently enabled across all future reboots).</string>
+    <string name="btn_open_settings">Open Settings</string>
+    <string name="btn_cancel">Later</string>
+    <string name="footer_version">RestartNow v2.0 • 2026</string>
+    <string name="link_about_app">About RestartNow</string>
+    <string name="dialog_about_title">About RestartNow</string>
+    <string name="dialog_about_message">RestartNow v2.0 (2026)\n\nUniversal 1-Touch System Reboot Utility for Android phones, tablets, and Automotive HeadUnits.\n\n• Engine: Dual-Action No-Root Architecture (Automotive Broadcast + Accessibility Gesture)\n• Screen Support: Adaptive Landscape &amp; Portrait\n• Developer: LamDien\n• License: Open Source (MIT License)\n• Privacy: Zero personal data collected.\n\nProject Home:\nhttps://github.com/LamDien/RestartNow</string>
+    <string name="dialog_about_close">Close</string>
+    <string name="admob_ad_unit_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_placeholder_title">Sponsored Ad Space</string>
+    <string name="ad_placeholder_desc">Google AdMob Test Unit</string>
 </resources>

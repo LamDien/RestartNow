@@ -1,52 +1,54 @@
-# RestartNow - Tiện Ích Khởi Động Lại 1-Chạm Cho Ownice C800 Pro
+# RestartNow - Universal 1-Touch System Reboot Utility (v2.0)
 
-Ứng dụng Android Native chuyên biệt dành cho màn hình Android ô tô (HeadUnit) Ownice C800 Pro (Hoàn toàn KHÔNG CẦN ROOT).
-
----
-
-## 🌟 Điểm nổi bật
-* **1-Touch Fast Reboot:** Mở app, chạm vào nút to tròn chính giữa là màn hình reboot ngay lập tức.
-* **Tối ưu buồng lái (Cockpit Aesthetic):** Nền tối Obsidian chống chói mắt khi lái xe ban đêm, nút nguồn màu đỏ đậm nổi khối 3D cùng viền mũi tên dạ quang xanh nhạt Neon Cyan hiện đại.
-* **Không Cần Root (No-Root Architecture):** Tận dụng lệnh broadcast phần cứng dành riêng cho chip Rockchip PX5 (`com.microntek.hctreboot`) kết hợp dịch vụ trợ năng tự động, tắt/bật lại toàn diện hệ điều hành (Cold Reboot), xóa sạch RAM và cache tồn đọng mà không cần root máy.
-* **Hoàn toàn Offline & Siêu Nhẹ:** Không cần kết nối Internet, thời gian mở app tức thì.
+Universal Android Native application for Android phones, tablets, and Automotive HeadUnits (Fully **NO ROOT REQUIRED**).
 
 ---
 
-## 📦 File Cài Đặt (APK)
-File APK đã được build và ký sẵn, nằm tại:
+## 🌟 Key Features (Version 2.0)
+
+* **1-Touch Fast Reboot:** Tap the prominent cockpit button to reboot the operating system immediately.
+* **100% English Interface:** Standardized English UI across all dialogs, labels, and notifications.
+* **Universal Screen Support (Adaptive Landscape & Portrait):**
+  * **Landscape Mode:** Reboot controls aligned to the left, AdMob block container aligned to the right.
+  * **Portrait Mode:** Reboot controls aligned to the top, AdMob block container aligned to the bottom.
+* **AdMob Integration (Test ID Phase):**
+  * Integrated Google Mobile Ads SDK with standard test unit `ca-app-pub-3940256099942544/6300978111`.
+  * Cockpit-styled container with adaptive fallback placeholder card for offline environments.
+* **App Info & Legal Popup:** Clickable `About RestartNow` link beneath the version footer displaying app specifications and open-source license info.
+* **Dual-Action No-Root Architecture:**
+  * Automotive hardware broadcasts for Rockchip PX5 / Microntek MTCE boards (`com.microntek.hctreboot`).
+  * Non-intrusive Accessibility Service (`RebootAccessibilityService`) with dual gesture dispatch.
+  * **1-Time Setup:** Remains permanently enabled across all subsequent reboots without re-activation.
+
+---
+
+## 📦 Release Installation File (APK)
+
+Signed, production-ready APK:
 ```
 bin/RestartNow.apk
 ```
 
 ---
 
-## 🚗 Hướng dẫn cài đặt lên xe hơi (Ownice C800 Pro)
+## 🚗 Installation Guide
 
-### Cách 1: Cài qua USB (Khuyên dùng - Đơn giản nhất)
-1. Copy file `bin/RestartNow.apk` vào một chiếc USB (định dạng FAT32).
-2. Cắm USB vào cổng kết nối USB của màn hình Android trên xe.
-3. Trên màn hình xe, mở ứng dụng **Quản Lý Tệp (File Manager)** $\rightarrow$ Chọn ổ USB $\rightarrow$ Nhấn vào file `RestartNow.apk`.
-4. Nhấn **Cài đặt (Install)**.
-5. Sau khi cài xong, mở app **RestartNow**.
-6. **Lần đầu kích hoạt:** Bấm nút RestartNow. Nếu màn hình hiện hướng dẫn, chỉ cần nhấn "Kích Hoạt Ngay" và gạt BẬT cho *RestartNow* trong mục Hỗ trợ tiếp cận (chỉ làm 1 lần duy nhất, dịch vụ sẽ tự động duy trì vĩnh viễn qua mọi chu kỳ khởi động xe).
+### Method 1: USB Flash Drive (Recommended)
+1. Copy `bin/RestartNow.apk` to a USB drive (FAT32/exFAT).
+2. Plug the USB into the vehicle's Android screen or connect to device.
+3. Open **File Manager** $\rightarrow$ select USB $\rightarrow$ tap `RestartNow.apk`.
+4. Tap **Install**.
+5. On first launch, tap the center button. If prompted, tap **Open Settings** and switch **RestartNow** to ON under Accessibility (only done once).
 
-### Cách 2: Cài qua WiFi bằng lệnh ADB (Dành cho dân kỹ thuật)
-Nếu màn hình và máy tính đang cùng kết nối chung một mạng WiFi:
+### Method 2: ADB Wireless / USB Sideload
 ```bash
-# Bật kết nối tới IP của màn hình xe (Ví dụ IP là 192.168.1.150)
-adb connect 192.168.1.150:5555
-
-# Cài đặt APK
 adb install -r bin/RestartNow.apk
 ```
 
 ---
 
-## 🛠️ Lệnh Build Lại Mã Nguồn (Nếu chỉnh sửa code)
+## 🛠️ Build Commands
 ```bash
-# Chạy Unit Tests
-./gradlew test
-
-# Build APK Debug
-./gradlew assembleDebug
+# Assemble Release Signed APK
+./gradlew assembleRelease
 ```
