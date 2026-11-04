@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RestartNow</string>
+    <string name="title_headunit">OWNICE C800 PRO</string>
+    <string name="btn_reboot">RestartNow</string>
+    <string name="btn_rebooting">ĐANG KHỞI ĐỘNG...</string>
+    <string name="subtitle_ready">Chạm để khởi động lại hệ thống ngay lập tức</string>
+    <string name="subtitle_rebooting">Đang gửi tín hiệu khởi động lại đến hệ điều hành...</string>
+    <string name="device_ready">HỆ THỐNG SẴN SÀNG • ROOT ACTIVE</string>
+    <string name="error_root_title">Yêu cầu quyền Root</string>
+    <string name="error_root_message">Không thể thực thi lệnh reboot. Vui lòng kiểm tra quyền Superuser (Root) của màn hình!</string>
+    <string name="btn_ok">Đã hiểu</string>
+    <string name="accessibility_service_label">Dịch Vụ Khởi Động Lại RestartNow</string>
+    <string name="accessibility_service_desc">Cho phép ứng dụng tự động thực hiện thao tác khởi động lại hệ thống không cần Root.</string>
+    <string name="dialog_setup_title">Kích hoạt Khởi động lại (Không cần Root)</string>
+    <string name="dialog_setup_message">Để RestartNow tự động khởi động lại màn hình mà không cần can thiệp Root máy, bạn chỉ cần gạt BẬT \"RestartNow\" trong mục Hỗ trợ tiếp cận (Chỉ cần làm 1 lần duy nhất, dịch vụ sẽ tự động duy trì vĩnh viễn sau mỗi lần khởi động lại xe).</string>
+    <string name="btn_open_settings">Kích Hoạt Ngay</string>
+    <string name="btn_cancel">Để sau</string>
+</resources>

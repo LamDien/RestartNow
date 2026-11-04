@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Cyan Glow Filter -->
+    <filter id="cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur1" />
+      <feGaussianBlur stdDeviation="32" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Red Neon Glow Filter -->
+    <filter id="red-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" result="blur1" />
+      <feGaussianBlur stdDeviation="28" result="blur2" />
+      <feGaussianBlur stdDeviation="48" result="blur3" />
+      <feMerge>
+        <feMergeNode in="blur3" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Solid Pitch Black Circle with Glowing Cyan Outer Rim -->
+  <!-- Outer Glow Halo -->
+  <circle cx="512" cy="512" r="485" fill="none" stroke="#00E5FF" stroke-width="12" filter="url(#cyan-glow)" opacity="0.8" />
+  
+  <!-- Solid Black Circle -->
+  <circle cx="512" cy="512" r="480" fill="#000000" stroke="#00E5FF" stroke-width="8" />
+
+  <!-- Outer Counter-Clockwise Arrow (Glowing Cyan) -->
+  <!-- Glow Layer -->
+  <path fill="#00E5FF" d="M 512.0,122.0 A 390.0 390.0 0 1 1 122.0,512.0 L 212.0,512.0 A 300.0 300.0 0 1 0 512.0,212.0 L 512.0,252.0 L 320.0,167.0 L 512.0,80.0 Z" filter="url(#cyan-glow)" opacity="0.75" />
+  <!-- Core Crisp Layer -->
+  <path fill="#00E5FF" d="M 512.0,122.0 A 390.0 390.0 0 1 1 122.0,512.0 L 212.0,512.0 A 300.0 300.0 0 1 0 512.0,212.0 L 512.0,252.0 L 320.0,167.0 L 512.0,80.0 Z" />
+  <!-- Inner Highlight Arc -->
+  <path fill="none" stroke="#E0F7FA" stroke-width="10" stroke-linecap="round" opacity="0.6"
+        d="M 500,167 A 345 345 0 1 1 167,500" />
+
+  <!-- Center Power Symbol in RACING NEON RED (#FF2D55 / #FF1744) -->
+  <!-- Glow Shadow / Aura -->
+  <g filter="url(#red-glow)" opacity="0.85">
+    <path fill="#FF1744" d="M 480.0,312.0 A 32.0 32.0 0 0 1 544.0,312.0 L 544.0,463.0 A 32.0 32.0 0 0 1 480.0,463.0 Z" />
+    <path fill="#FF1744" d="M 632.5,346.2 A 205.0 205.0 0 1 1 391.5,346.2 A 36.0 36.0 0 0 1 433.8,404.4 A 133.0 133.0 0 1 0 590.2,404.4 A 36.0 36.0 0 0 1 632.5,346.2 Z" />
+  </g>
+  <!-- Core Crisp Layer -->
+  <path fill="#FF2D55" d="M 480.0,312.0 A 32.0 32.0 0 0 1 544.0,312.0 L 544.0,463.0 A 32.0 32.0 0 0 1 480.0,463.0 Z" />
+  <path fill="#FF2D55" d="M 632.5,346.2 A 205.0 205.0 0 1 1 391.5,346.2 A 36.0 36.0 0 0 1 433.8,404.4 A 133.0 133.0 0 1 0 590.2,404.4 A 36.0 36.0 0 0 1 632.5,346.2 Z" />
+  <!-- Core Highlight (Bright Neon Core) -->
+  <rect x="498" y="316" width="28" height="135" rx="14" fill="#FF8A80" opacity="0.7" />
+  <path fill="none" stroke="#FF8A80" stroke-width="8" stroke-linecap="round" opacity="0.7"
+        d="M 610,360 A 169 169 0 1 1 414,360" />
+</svg>

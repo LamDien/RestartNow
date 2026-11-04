@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="600" viewBox="0 0 1024 600">
+    <rect width="1024" height="600" fill="#0A0F1D" />
+    
+    <!-- Top Header Left: Status Badge -->
+    <rect x="28" y="24" width="290" height="36" rx="4" fill="#162234" />
+    <circle cx="48" cy="42" r="4" fill="#00E5FF" />
+    <text x="62" y="46" fill="#7DD3FC" font-size="12" font-family="sans-serif" font-weight="bold" letter-spacing="0.8">HỆ THỐNG SẴN SÀNG • ROOT ACTIVE</text>
+    
+    <!-- Top Header Right: HeadUnit Tag -->
+    <text x="996" y="46" fill="#94A3B8" font-size="13" font-family="sans-serif" font-weight="bold" text-anchor="end" letter-spacing="1">OWNICE C800 PRO</text>
+    
+    <!-- Hero Button (Using clean transparent red power icon) -->
+    <image href="/Users/hoanng/AIAgent/RestartNow/scratch/clean_red_power_icon.png" 
+           x="392.0" y="155.0" width="240.0" height="240.0" />
+    
+    <!-- Button Title: RestartNow (Below Button) -->
+    <text x="512.0" y="435.0" fill="#FFFFFF" font-size="22" font-family="sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1.5">RestartNow</text>
+    
+    <!-- Subtitle Helper Description -->
+    <text x="512.0" y="470.0" fill="#94A3B8" font-size="14" font-family="sans-serif" text-anchor="middle">Chạm để khởi động lại hệ thống ngay lập tức</text>
+    
+    <!-- Bottom Footer Tip -->
+    <text x="512.0" y="572" fill="#475569" font-size="11" font-family="sans-serif" text-anchor="middle" letter-spacing="0.5">Fast Root Reboot • SuperSU Certified</text>
+</svg>

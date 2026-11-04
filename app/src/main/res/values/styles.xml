@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Application Theme -->
+    <style name="Theme.RestartNow" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/cyan_primary</item>
+        <item name="colorPrimaryVariant">@color/cyan_dark</item>
+        <item name="colorOnPrimary">@color/cockpit_bg</item>
+
+        <!-- Secondary brand colors -->
+        <item name="colorSecondary">@color/cyan_secondary</item>
+        <item name="colorSecondaryVariant">@color/cyan_primary</item>
+        <item name="colorOnSecondary">@color/cockpit_bg</item>
+
+        <!-- Background & Surface -->
+        <item name="android:colorBackground">@color/cockpit_bg</item>
+        <item name="colorSurface">@color/cockpit_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- Status bar and navigation bar for Cockpit integration -->
+        <item name="android:statusBarColor">@color/cockpit_bg</item>
+        <item name="android:navigationBarColor">@color/cockpit_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
