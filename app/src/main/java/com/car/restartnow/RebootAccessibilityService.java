@@ -1,6 +1,10 @@
 package com.car.restartnow;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -13,8 +17,8 @@ import java.util.List;
  * RebootAccessibilityService cho phép thực hiện thao tác khởi động lại hệ thống
  * mà không cần can thiệp quyền Root trên đầu Android ô tô (như Ownice C800 Pro).
  * 
- * Thiết kế an toàn 100% không bao giờ crash, giúp hệ điều hành Android luôn
- * duy trì trạng thái kích hoạt vĩnh viễn qua mọi chu kỳ khởi động lại xe.
+ * Sử dụng cơ chế kết hợp: Accessibility Action Click + Dispatch Gesture Tap tọa độ
+ * đảm bảo 100% chạm chính xác nút Khởi động lại ngay khi menu nguồn xuất hiện.
  */
 public class RebootAccessibilityService extends AccessibilityService {
 
@@ -69,8 +73,8 @@ public class RebootAccessibilityService extends AccessibilityService {
             Log.i(TAG, "Thực thi performGlobalAction(GLOBAL_ACTION_POWER_DIALOG)...");
             boolean dialogOpened = performGlobalAction(GLOBAL_ACTION_POWER_DIALOG);
 
-            // 2. Lên lịch quét tự động định kỳ sau 100ms, 250ms, 500ms, 800ms, 1200ms
-            int[] delays = {100, 250, 400, 600, 800, 1100, 1500};
+            // 2. Chờ dialog hoàn tất hiệu ứng mở (từ 250ms trở đi) để thực hiện quét và tap
+            int[] delays = {250, 450, 700, 1000, 1400, 1900, 2500};
             for (final int delay : delays) {
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -81,6 +85,14 @@ public class RebootAccessibilityService extends AccessibilityService {
                     }
                 }, delay);
             }
+
+            // Tự động giải phóng sau 5s nếu hệ thống đã reboot hoặc hủy
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    isAutoRebootPending = false;
+                }
+            }, 5000);
 
             return dialogOpened;
         } catch (Throwable t) {
@@ -94,12 +106,13 @@ public class RebootAccessibilityService extends AccessibilityService {
         try {
             if (!isAutoRebootPending) return;
 
-            // Quá 6 giây kể từ khi bấm thì hủy cờ pending để tránh bấm nhầm
-            if (System.currentTimeMillis() - rebootRequestTimestamp > 6000) {
+            // Quá 5 giây kể từ khi bấm thì hủy cờ pending
+            if (System.currentTimeMillis() - rebootRequestTimestamp > 5000) {
                 isAutoRebootPending = false;
                 return;
             }
 
+            // Quét và click
             scanAndClickRestart();
         } catch (Throwable t) {
             Log.e(TAG, "Lỗi trong onAccessibilityEvent: " + t.getMessage());
@@ -108,7 +121,6 @@ public class RebootAccessibilityService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-        // Không làm gì, đảm bảo không bao giờ ném ngoại lệ
     }
 
     /**
@@ -119,7 +131,6 @@ public class RebootAccessibilityService extends AccessibilityService {
             AccessibilityNodeInfo root = getRootInActiveWindow();
             if (root == null) return;
 
-            // Danh sách các từ khóa nhận diện nút khởi động lại trên Android
             String[] targetKeywords = {
                     "khởi động lại",
                     "khoi dong lai",
@@ -135,18 +146,15 @@ public class RebootAccessibilityService extends AccessibilityService {
                 if (matchedNodes != null && !matchedNodes.isEmpty()) {
                     for (AccessibilityNodeInfo node : matchedNodes) {
                         if (clickNodeOrParent(node)) {
-                            Log.i(TAG, "Đã tự động click nút Khởi Động Lại thành công (khớp từ khóa: " + keyword + ")!");
-                            isAutoRebootPending = false;
+                            Log.i(TAG, "Đã tự động click nút Khởi Động Lại thành công (từ khóa: " + keyword + ")!");
                             return;
                         }
                     }
                 }
             }
 
-            // Nếu tìm theo text chưa ra, duyệt đệ quy kiểm tra text/contentDescription
-            if (traverseAndClick(root)) {
-                isAutoRebootPending = false;
-            }
+            // Duyệt đệ quy nếu tìm theo text chưa khớp
+            traverseAndClick(root);
 
         } catch (Throwable t) {
             Log.e(TAG, "Lỗi quét cây Accessibility: " + t.getMessage());
@@ -192,22 +200,49 @@ public class RebootAccessibilityService extends AccessibilityService {
         if (node == null) return false;
 
         try {
-            if (node.isClickable()) {
-                return node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            // 1. Mô phỏng cử chỉ chạm thật (Gesture Tap) vào chính giữa tọa độ nút trên màn hình
+            Rect bounds = new Rect();
+            node.getBoundsInScreen(bounds);
+            if (!bounds.isEmpty() && bounds.centerX() > 0 && bounds.centerY() > 0) {
+                Log.d(TAG, "Thực hiện dispatchTap tại tọa độ: (" + bounds.centerX() + ", " + bounds.centerY() + ")");
+                dispatchTap(bounds.centerX(), bounds.centerY());
             }
 
+            // 2. Đồng thời gửi ACTION_CLICK trên AccessibilityNode
+            if (node.isClickable()) {
+                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            }
+
+            // 3. Và gửi ACTION_CLICK lên container cha (nếu node con không bắt sự kiện)
             AccessibilityNodeInfo parent = node.getParent();
             int depth = 0;
             while (parent != null && depth < 4) {
                 if (parent.isClickable()) {
-                    return parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    parent.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    break;
                 }
                 parent = parent.getParent();
                 depth++;
             }
+            return true;
         } catch (Throwable ignored) {
         }
         return false;
     }
-}
 
+    private void dispatchTap(int x, int y) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                Path path = new Path();
+                path.moveTo(x, y);
+                GestureDescription.Builder builder = new GestureDescription.Builder();
+                GestureDescription gesture = builder
+                        .addStroke(new GestureDescription.StrokeDescription(path, 0, 80))
+                        .build();
+                dispatchGesture(gesture, null, null);
+            } catch (Throwable t) {
+                Log.w(TAG, "Không thể dispatchGesture: " + t.getMessage());
+            }
+        }
+    }
+}
